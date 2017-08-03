@@ -1,7 +1,8 @@
-my_libraries <- c("ggmap","sp","rgdal","rgeos", "ggplot2","leaflet","dplyr", "magrittr",
-                  "readr", "lubridate", "RColorBrewer", "classInt")
+list.of.packages <- c("ggmap","sp","rgdal","rgeos", "ggplot2","leaflet","dplyr", "magrittr",
+                  "readr", "lubridate", "RColorBrewer", "classInt", "maptools")
 
-install.packages(my_libraries)
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
 
 
 ## These are some of my favorite packages for spatial data analysis
