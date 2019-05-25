@@ -1,24 +1,27 @@
-list.of.packages <- c("ggmap","sp","rgdal","rgeos", "ggplot2","leaflet","dplyr", "magrittr",
-                  "readr", "lubridate", "RColorBrewer", "classInt", "maptools", "grid")
+#source: https://stackoverflow.com/questions/4090169/elegant-way-to-check-for-missing-packages-and-install-them
 
-new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+quietly_load_R_packages <- function(my_packages)
+{
+    #check if package is installed
+    new_packages <- my_packages[!(my_packages %in% installed.packages()[,"Package"])] 
+    if(length(new_packages)) install.packages(new_packages)
+    
+##install.packages("ggplot2", repos="http://cran.rstudio.com/", dependencies=TRUE)
+    
+    #check if package is loaded in current environment
+    
+    for(package_name in my_packages)
+    { 
+      if (!(package_name %in% loadedNamespaces()))
+      {
+        suppressPackageStartupMessages(library(package_name, character.only=TRUE, quietly=TRUE))
+      }
+    }
+}
 
-#reinstall missing package library forced
-#install.packages("ggplot2", repos="http://cran.rstudio.com/", dependencies=TRUE)
 
+list_of_packages <- c("ggmap","sp","rgdal","rgeos", "ggplot2","leaflet","dplyr", "magrittr", 
+                      "readr", "lubridate", "RColorBrewer", "classInt", "maptools", "grid", 
+                      "shiny", "plotly", "stringr", "lubridate", "readr", "RODBC", "classInt")
 
-## These are some of my favorite packages for spatial data analysis
-suppressPackageStartupMessages(library(ggmap))
-suppressPackageStartupMessages(library(sp))
-suppressPackageStartupMessages(library(rgdal))
-suppressPackageStartupMessages(library(rgeos))
-suppressPackageStartupMessages(library(ggplot2))
-suppressPackageStartupMessages(library(leaflet))
-suppressPackageStartupMessages(library(dplyr))
-suppressPackageStartupMessages(library(magrittr))
-suppressPackageStartupMessages(library(readr))
-suppressPackageStartupMessages(library(lubridate))
-suppressPackageStartupMessages(library(RColorBrewer))
-suppressPackageStartupMessages(library(classInt))
-suppressPackageStartupMessages(library(grid))
+quietly_load_R_packages(list_of_packages)
